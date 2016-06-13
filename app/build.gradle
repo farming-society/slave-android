@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.eclipse.jgit:org.eclipse.jgit:3.7.1.201504261725-r"
+    compile 'com.mcxiaoke.koi:core:0.5.1@aar'
 }
 buildscript {
     ext.kotlin_version = '1.0.0-rc-1036'

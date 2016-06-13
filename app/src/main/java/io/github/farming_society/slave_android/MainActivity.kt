@@ -5,11 +5,8 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import messages.BankMessageGenerator
-import messages.MessageCrawler
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,21 +19,8 @@ class MainActivity : AppCompatActivity() {
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show() };
 
-        val msgCrawler = MessageCrawler(this)
-        val msgs = msgCrawler.findMessages("15778000")
-
-        Log.d("crawler", msgs.count().toString())
-
-        val bankMsgs = BankMessageGenerator.parseAndGenerate(msgs).filter { it.accountNo == "***" } // TODO implement properties
-        bankMsgs.forEach {
-            Log.d("crawler", it.hashCode().toString() + "@" + it.accountNo + " >> " + it.date.toString() + "::" + it.inout + " @ " + it.body)
-        }
-
-        // pseudo
-        // from git
-        // convert to json object
-        // merge & sort by date
-        // upload
+        val worker = Worker(this)
+        worker.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

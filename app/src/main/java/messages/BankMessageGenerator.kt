@@ -7,7 +7,7 @@ data class BankMessage (val accountNo: String, val date: Date, val inout: Int, v
 
 object BankMessageGenerator {
 
-    val rule = Regex("""신한(\d\d)\/(\d\d)\s+(\d\d):(\d\d)[^\d]+(\d\d\d-\d\d\d-\d\d\d\d\d\d)\n+(출금|입금)\s+([\d,]+)\n+잔액\s+([\d,]+)\n\s*([^\n\r\u0000]*)""")
+    val rule = Regex("""신한(\d\d)\/(\d\d)\s+(\d\d):(\d\d)[^\d]+(\d\d\d-\d\d\d-\d\d\d\d\d\d)\n+(출금|입금)\s+([\d,]+)\n+잔액\s+([\d,]+)\n?\s*([^\n\r\u0000]*)""")
 
     fun parseAndGenerate(messages: List<Message>) : List<BankMessage> {
         val bankMsgs = ArrayList<BankMessage>()
@@ -33,7 +33,7 @@ object BankMessageGenerator {
                 inout = -inout
 
             val balance = result.groupValues[8].replace(",", "").toInt()
-            val body = result.groupValues[9]
+            val body = result.groupValues[9].trim()
 
             val bankMsg = BankMessage(accountNo, date, inout, balance, body)
             bankMsgs.add(bankMsg)

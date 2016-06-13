@@ -5,3 +5,4 @@
 /build
 /captures
 /.idea
+app/src/main/resources/config.properties
